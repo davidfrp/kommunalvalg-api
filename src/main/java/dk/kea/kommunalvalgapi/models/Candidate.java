@@ -1,6 +1,7 @@
 package dk.kea.kommunalvalgapi.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -16,19 +17,28 @@ public class Candidate {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.DETACH})
+    @PositiveOrZero
+    @Column(name = "amount_of_votes")
+    private long amountOfVotes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "party_id")
     private Party party;
 
     protected Candidate() { }
 
-    public Candidate(String name, Party party) {
+    public Candidate(String name, long amountOfVotes, Party party) {
         this.name = name;
+        this.amountOfVotes = amountOfVotes;
         this.party = party;
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,6 +47,14 @@ public class Candidate {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getAmountOfVotes() {
+        return amountOfVotes;
+    }
+
+    public void setAmountOfVotes(long amountOfVotes) {
+        this.amountOfVotes = amountOfVotes;
     }
 
     public Party getParty() {

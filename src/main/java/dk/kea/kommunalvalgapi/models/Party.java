@@ -3,6 +3,8 @@ package dk.kea.kommunalvalgapi.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Set;
@@ -20,11 +22,12 @@ public class Party {
     @Column(name = "signature", length = 1)
     private String signature;
 
-    @Size(min = 1, max = 3)
+    @Max(3)
     @Column(name = "abbreviation", length = 3)
     private String abbreviation;
 
-    @Size(min = 1, max = 100)
+    @Max(100)
+    @NotEmpty
     @Column(name = "name", length = 100)
     private String name;
 
@@ -34,7 +37,7 @@ public class Party {
     private String hexColor;
 
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "party")
+    @OneToMany(mappedBy = "party", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Candidate> candidates;
 
     protected Party() { }
@@ -49,6 +52,10 @@ public class Party {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getSignature() {
