@@ -132,6 +132,14 @@ public class PartyController {
                                              @RequestBody Candidate candidate) {
         candidate.setId(id);
 
+        Party party = partyRepository.findById(candidate.getParty().getId())
+                .orElse(null);
+
+        if (party == null)
+            return ResponseEntity.badRequest().build();
+
+        candidate.setParty(party);
+
         candidateRepository.save(candidate);
 
         return ResponseEntity.noContent().build();
