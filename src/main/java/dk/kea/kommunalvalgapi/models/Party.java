@@ -18,8 +18,8 @@ public class Party {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Size(min = 1, max = 1)
-    @Column(name = "signature", length = 1)
+    @Size(min = 1, max = 2)
+    @Column(name = "signature", length = 2)
     private String signature;
 
     @Max(3)

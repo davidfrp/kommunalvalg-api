@@ -21,7 +21,7 @@ public class CandidateController {
     public CandidateController(CandidateRepository candidateRepository) {
         this.candidateRepository = candidateRepository;
     }
-
+    
     /**
      * Gets candidates from all parties.
      * @param page the current page
